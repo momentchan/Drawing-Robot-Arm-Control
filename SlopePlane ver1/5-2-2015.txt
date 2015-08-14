@@ -1,0 +1,75 @@
+	kbCmd = 'm';
+	MainLoop_keyboard();
+
+	while(1)//wait for right position
+		if( _kbhit() )
+			break;
+
+	Matrix4f Pose_0;
+	Matrix4f Pose_1;
+	Matrix4f Pose_2;
+	Pose_0 = Matrix4f::Identity();
+	Pose_0.block(0,0,3,3) = R07Cmd;
+	Pose_0.block(0,3,3,1) = P07Cmd;
+	bool press = 0;
+	char keyIn = 0;
+
+	while(1)
+	{
+//		if ( _kbhit() )
+//			 kbCmd = _getche();
+		if ( _kbhit() )
+			keyIn = _getche();
+
+		if ( keyIn == 'r')
+			kbCmd = 'f';
+		if ( keyIn == 't')
+			kbCmd = 's';
+		if ( keyIn == 'f')
+			kbCmd = 'h';
+		if ( keyIn == 'm')//Enter == 13
+		{
+			Pose_1 = Matrix4f::Identity();
+			Pose_1.block(0,0,3,3) = R07Cmd;
+			Pose_1.block(0,3,3,1) = P07Cmd;
+//			press = 1;
+		}
+		if ( keyIn == 'n')//Enter == 13
+		{
+			Pose_2 = Matrix4f::Identity();
+			Pose_2.block(0,0,3,3) = R07Cmd;
+			Pose_2.block(0,3,3,1) = P07Cmd;
+//			press = 1;
+		}
+
+		if ( keyIn == 'c')
+		{
+			setDefaultArmSpeed(1);
+			Move_L_Abs(Pose_0, 0);
+			while(MOVL){
+				cout << "==========================";
+                if(_kbhit())
+                        break;
+			}
+		}
+
+		if ( keyIn == 'a' )//&& press)
+		{
+			setDefaultArmSpeed(1);
+			Move_L_Abs(Pose_1, 0);
+			while(MOVL){
+				cout << "++++++++++++++++++++++++++";
+				if(_kbhit())
+					break;
+			}
+		}
+		if ( keyIn == 'b' )//&& press)
+		{
+			setDefaultArmSpeed(1);
+			Move_L_Abs(Pose_2, 0);
+			while(MOVL){
+				cout << "--------------------------";
+				if(_kbhit())
+					break;
+			}
+		}
